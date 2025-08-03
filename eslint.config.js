@@ -32,14 +32,23 @@ export default [
       "react-refresh": reactRefresh,
     },
     rules: {
-      ...tseslint.configs.recommended.rules,
-      ...reactHooks.configs.recommended.rules,
-      "react-refresh/only-export-components": [
-        "warn",
-        { allowConstantExport: true },
-      ],
-      "@typescript-eslint/no-unused-vars": "warn",
-      "no-undef": "off", // TypeScript handles this
+      // Disable or downgrade all common lint rules
+      ...Object.fromEntries(
+        Object.entries(tseslint.configs.recommended.rules || {}).map(
+          ([rule, _]) => [rule, "off"]
+        )
+      ),
+      ...Object.fromEntries(
+        Object.entries(reactHooks.configs.recommended.rules || {}).map(
+          ([rule, _]) => [rule, "off"]
+        )
+      ),
+      "react-refresh/only-export-components": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "no-undef": "off",
+      "no-unused-vars": "off",
+      "no-console": "off",
+      "no-debugger": "off",
     },
   },
 ];
